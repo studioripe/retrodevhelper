@@ -1,0 +1,6 @@
+project_name: "Project Name:"
+project_help: "Choose a name for your project."
+console_target: "Console Target:"
+sdk: "Select a SDK:"
+gb: "Gameboy"
+sg: "Genesis / Mega Drive"
