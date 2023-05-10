@@ -22,6 +22,7 @@ fn main() -> InquireResult<()> {
         match query {
             "init" => init_project(),
             "build" => build_project(),
+            "run" => run_project(),
             _ => help(),
         }
     } else {
@@ -36,21 +37,21 @@ fn get_consoles() -> Vec<&'static str> {
 }
 
 fn build_project() {
-    let project: Project = {
-        let dir = current_dir().unwrap();
-        let dir_value = dir.display();
-
-        let project = std::fs::read_to_string(format!("{dir_value}/project.json"))
-            .expect("Error Reading project.json");
-
-        // Load the MissyFoodSchedule structure from the string.
-        serde_json::from_str::<Project>(&project).unwrap()
-    };
+    let project: Project = get_project();
     genesis::build::project(&project.name);
 }
 
+fn run_project() {
+    let project: Project = get_project();
+    genesis::run::project(&project.name);
+}
+
 fn help() {
-    println!("help");
+    println!("Help");
+    println!("Commands:");
+    println!("init - Start a New Project");
+    println!("build - Build a Project");
+    println!("run - Run a Project");
 }
 
 fn init_project() {
@@ -64,6 +65,20 @@ fn init_project() {
         .expect("msg");
 
     genesis::create::project(_name.as_str());
+}
+
+fn get_project() -> Project {
+    let project: Project = {
+        let dir = current_dir().unwrap();
+        let dir_value = dir.display();
+
+        let project = std::fs::read_to_string(format!("{dir_value}/project.json"))
+            .expect("Error Reading project.json");
+
+        // Load the MissyFoodSchedule structure from the string.
+        serde_json::from_str::<Project>(&project).unwrap()
+    };
+    return project;
 }
 
 fn print_logo() {
