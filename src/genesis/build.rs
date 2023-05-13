@@ -1,32 +1,31 @@
 use std::{env::current_dir, process::Command};
 
+use rust_i18n::t;
 use spinoff::{spinners, Color, Spinner};
 
-pub fn project(project_name: &str) {
-    println!("Building Project {project_name}");
-
+pub fn project() {
     let dir = current_dir().unwrap();
     let dir_value = dir.display();
 
-    let a = format!("{dir_value}:/m68k");
-    let spinner = Spinner::new(spinners::Dots, "Building...", Color::Blue);
+    let build_dir = format!("{dir_value}:/m68k");
+    let spinner = Spinner::new(spinners::Dots, t!("building"), Color::Blue);
 
     let output = Command::new("docker")
         .args([
             "run",
             "--rm",
             "-v",
-            &a,
+            &build_dir,
             "-t",
             "registry.gitlab.com/doragasu/docker-sgdk:v1.80",
         ])
         .output()
-        .expect("failed to execute process");
+        .expect(t!("build_fail").as_str());
 
     if output.status.success() {
-        spinner.success("Build Successful");
+        spinner.success(t!("build_sucess").as_str());
     } else {
         println!("stderr: {}", String::from_utf8_lossy(&output.stdout));
-        spinner.fail("Build Failed");
+        spinner.fail(t!("build_fail").as_str());
     }
 }
