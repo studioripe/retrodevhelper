@@ -33,25 +33,25 @@ fn main() -> InquireResult<()> {
 }
 
 fn get_consoles() -> Vec<&'static str> {
-    vec!["Genesis / Mega Drive"]
+    vec!["Genesis/Mega Drive"]
 }
 
 fn build_project() {
-    let project: Project = get_project();
-    genesis::build::project(&project.name);
+    // let project: Project = get_project();
+    genesis::build::project();
 }
 
 fn run_project() {
-    let project: Project = get_project();
-    genesis::run::project(&project.name);
+    // let project: Project = get_project();
+    genesis::run::project();
 }
 
 fn help() {
-    println!("Help");
-    println!("Commands:");
-    println!("init - Start a New Project");
-    println!("build - Build a Project");
-    println!("run - Run a Project");
+    println!("{}", t!("help_title").as_str());
+    println!("{}", t!("help_subtitle").as_str());
+    println!("{}", t!("init_help").as_str());
+    println!("{}", t!("build_help").as_str());
+    println!("{}", t!("run_help").as_str());
 }
 
 fn init_project() {
@@ -60,7 +60,7 @@ fn init_project() {
         .prompt()
         .expect("msg");
 
-    let _console = Select::new("Console Target:", get_consoles())
+    let _console = Select::new(t!("console_target").as_str(), get_consoles())
         .prompt()
         .expect("msg");
 
@@ -73,7 +73,7 @@ fn get_project() -> Project {
         let dir_value = dir.display();
 
         let project = std::fs::read_to_string(format!("{dir_value}/project.json"))
-            .expect("Error Reading project.json");
+            .expect(t!("project_error").as_str());
 
         // Load the MissyFoodSchedule structure from the string.
         serde_json::from_str::<Project>(&project).unwrap()
@@ -82,8 +82,8 @@ fn get_project() -> Project {
 }
 
 fn print_logo() {
-    println!("");
+    println!();
     println!("█▀█ █▀▀ ▀█▀ █▀█ █▀█ ▄▄ █▀▄ █▀▀ █░█ ▄▄ █░█ █▀▀ █░░ █▀█ █▀▀ █▀█");
     println!("█▀▄ ██▄ ░█░ █▀▄ █▄█ ░░ █▄▀ ██▄ ▀▄▀ ░░ █▀█ ██▄ █▄▄ █▀▀ ██▄ █▀▄");
-    println!("");
+    println!();
 }

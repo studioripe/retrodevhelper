@@ -27,7 +27,7 @@ int main()
     return (0);
 }"#;
 
-            println!("Creating project...");
+            println!("{}", t!("creating_project").as_str());
             let _dir = fs::create_dir(project_name);
             let data = Project {
                 name: project_name.to_string(),
@@ -38,24 +38,25 @@ int main()
             let _dir = fs::create_dir(format!("{project_name}/res"));
             let _dir = fs::create_dir(format!("{project_name}/src"));
 
-            fs::write(format!("{project_name}/src/main.c"), sample).expect("Unable to write file");
+            fs::write(format!("{project_name}/src/main.c"), sample)
+                .expect(t!("file_write_error").as_str());
 
             let _j = match serde_json::to_string_pretty(&data) {
                 Ok(v) => fs::write(format!("{project_name}/project.json"), v)
-                    .expect("Unable to write file"),
+                    .expect(t!("file_write_error").as_str()),
                 Err(_) => {
                     // Write `msg` to `stderr`.
-                    eprintln!("Unable to load data");
+                    eprintln!("{}", t!("error_creating_json").as_str());
                     // Exit the program with exit code `1`.
                     exit(1);
                 }
             };
-            println!("Project Created");
+            println!("{}", t!("project_created").as_str());
         }
-        Err(_) => println!("There was an error, please try again"),
+        Err(_) => println!("{}", t!("error_selecting").as_str()),
     }
 }
 
 fn get_genesis_sdks() -> Vec<&'static str> {
-    vec!["SGDK (Recommended)"]
+    vec!["SGDK"]
 }
