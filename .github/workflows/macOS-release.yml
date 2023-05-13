@@ -1,0 +1,64 @@
+name: macOS-release
+on:
+  push:
+    tags:
+    - 'v[0-9]+.[0-9]+.[0-9]+'
+    
+env:
+  BIN_NAME: retrodevhelper
+  PROJECT_NAME: retrodevhelper
+  REPO_NAME: studioripe/retrodevhelper
+  BREW_TAP: studioripe/homebrew-retrodevhelper
+
+jobs:
+  dist:
+    name: dist
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: true # don't fail other jobs if one fails
+      matrix:
+        build: [aarch64-macos] #, x86_64-win-gnu, win32-msvc
+        include:
+        - build: aarch64-macos
+          os: macos-latest
+          rust: stable
+          target: aarch64-apple-darwin
+        
+    steps:
+      - name: Checkout sources
+        uses: actions/checkout@v2
+        with:
+          submodules: true
+
+      - name: Install ${{ matrix.rust }} toolchain
+        uses: actions-rs/toolchain@v1
+        with:
+          profile: minimal
+          toolchain: ${{ matrix.rust }}
+          target: ${{ matrix.target }}
+          override: true
+          
+      - name: Calculate tag name
+        run: |
+          name=dev
+          if [[ $GITHUB_REF == refs/tags/v* ]]; then
+            name=${GITHUB_REF:10}
+          fi
+          echo ::set-output name=val::$name
+          echo TAG=$name >> $GITHUB_ENV
+        id: tagname
+        
+      - name: Universal Build
+        run: ./ci/build-universal.sh
+        
+      - name: Change File Name
+        run: mv ./target/retrodevhelper-macos-universal.tar.gz ./target/retrodevhelper-${{ steps.tagname.outputs.val }}-macos-universal.tar.gz
+        
+      - name: Upload binaries to release
+        uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: dist/*
+          file_glob: true
+          tag: ${{ steps.tagname.outputs.val }}
+          overwrite: true
