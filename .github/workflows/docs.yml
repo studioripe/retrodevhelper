@@ -35,12 +35,12 @@ jobs:
         run: |
           cd docs
           npm ci
-          npm run buil
+          npm run build
       - name: Upload Page Artifact
         uses: actions/upload-pages-artifact@v1
         with:
           path: docs/build
-          
+
   # Deploy job
   deploy:
     # Add a dependency to the build job
