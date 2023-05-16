@@ -1,0 +1,66 @@
+---
+sidebar_position: 1
+---
+
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+
+# Getting Started
+
+<Tabs
+  defaultValue="macos"
+  values={[
+      { label: 'macOS', value: 'macos', },
+      { label: 'Linux', value: 'linux', },
+      { label: 'Windows', value: 'windows', },
+  ]}
+>
+<TabItem value="macos">
+
+## Prerequisites
+
+Before installing retrodevhelper you will need the following applications installed
+
+- [Homebrew](https://brew.sh) - Package Manager for macOS
+- [Docker Desktop](https://www.docker.com/products/docker-desktop/) - Container Platform for macOS
+
+## Installation
+
+With everything installed you can run the following commands below to install retrodevhelper.
+
+```bash
+brew tap studioripe/retrodevhelper
+brew install retrodevhelper
+```
+
+</TabItem>
+<TabItem value="linux">
+
+TBD
+
+</TabItem>
+<TabItem value="windows">
+
+TBD
+
+</TabItem>
+</Tabs>
+
+## Usage
+
+Once installed you should be able to run the `retrodevhelper help` command and get an output like below.
+
+```bash
+➜  ~ retrodevhelper help
+
+█▀█ █▀▀ ▀█▀ █▀█ █▀█ ▄▄ █▀▄ █▀▀ █░█ ▄▄ █░█ █▀▀ █░░ █▀█ █▀▀ █▀█
+█▀▄ ██▄ ░█░ █▀▄ █▄█ ░░ █▄▀ ██▄ ▀▄▀ ░░ █▀█ ██▄ █▄▄ █▀▀ ██▄ █▀▄
+
+Help
+Commands
+init - Start a New Project
+build - Build a Project
+run - Run a Project
+```
+
+If that worked we can now move onto creating our first project.

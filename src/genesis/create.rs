@@ -1,8 +1,15 @@
-use std::{fs, process::exit};
+use std::{
+    env::set_current_dir,
+    fs,
+    path::Path,
+    process::{exit, Command},
+};
 
+use directories::ProjectDirs;
 use inquire::Select;
 use rust_i18n::t;
 use serde_derive::Serialize;
+use spinoff::{spinners, Color, Spinner};
 
 #[derive(Serialize)]
 struct Project {
@@ -15,6 +22,22 @@ pub fn project(project_name: &str) {
 
     match ans {
         Ok(_choice) => {
+            let spinner = Spinner::new(spinners::Dots, t!("creating_project"), Color::Blue);
+
+            if let Some(proj_dirs) = ProjectDirs::from("com", "StudioRipe", "RetroDevHelper") {
+                let data = proj_dirs.data_local_dir().to_str().expect("msg");
+
+                if !Path::new(&format!("{data}/SGDK")).exists() {
+                    println!("{}", t!("download_sgdk").as_str());
+                    git_download::repo("https://github.com/Stephane-D/SGDK")
+                        .branch_name("master")
+                        .add_file("res/", format!("{data}/SGDK/res"))
+                        .add_file("inc/", format!("{data}/SGDK/inc"))
+                        .exec()
+                        .expect("FAIL");
+                }
+            }
+
             let sample = r#"#include <genesis.h>
 
 int main()
@@ -51,7 +74,7 @@ int main()
                     exit(1);
                 }
             };
-            println!("{}", t!("project_created").as_str());
+            spinner.success(t!("project_created").as_str());
         }
         Err(_) => println!("{}", t!("error_selecting").as_str()),
     }
