@@ -75,7 +75,6 @@ fn get_project() -> Project {
         let project = std::fs::read_to_string(format!("{dir_value}/project.json"))
             .expect(t!("project_error").as_str());
 
-        // Load the MissyFoodSchedule structure from the string.
         serde_json::from_str::<Project>(&project).unwrap()
     };
     return project;
