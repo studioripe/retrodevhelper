@@ -1,0 +1,19 @@
+{
+  "configurations": [
+      {
+          "name": "SGDK",
+          "includePath": [
+              "${workspaceFolder}/**"
+          ],
+          "defines": [],
+          "macFrameworkPath": [
+              "/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/System/Library/Frameworks"
+          ],
+          "compilerPath": "/usr/bin/clang",
+          "cStandard": "${default}",
+          "cppStandard": "${default}",
+          "intelliSenseMode": "macos-clang-arm64"
+      }
+  ],
+  "version": 4
+}
