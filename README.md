@@ -9,7 +9,7 @@
 <div align="center">
 
 [![macOS-release](https://github.com/studioripe/retrodevhelper/actions/workflows/macOS-release.yml/badge.svg)](https://github.com/studioripe/retrodevhelper/actions/workflows/macOS-release.yml)
-
+[![Deploy Docs](https://github.com/studioripe/retrodevhelper/actions/workflows/docs.yml/badge.svg)](https://github.com/studioripe/retrodevhelper/actions/workflows/docs.yml)
 </div>
 
 <p align="center">Retro Dev Helper is a CLI Application built in Rust that's designed to make the development of retro games as human friendly as possible. Retro Dev Helper is cross platform and works across a range of popular open source SDKs designed for retro consoles/computers.<p>
