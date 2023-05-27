@@ -9,6 +9,7 @@
 <div align="center">
 
 [![macOS-release](https://github.com/studioripe/retrodevhelper/actions/workflows/macOS-release.yml/badge.svg)](https://github.com/studioripe/retrodevhelper/actions/workflows/macOS-release.yml)
+[![build result](https://build.opensuse.org/projects/home:joshm998/packages/retrodevhelper/badge.svg?type=default)](https://build.opensuse.org/package/show/home:joshm998/retrodevhelper)
 [![Deploy Docs](https://github.com/studioripe/retrodevhelper/actions/workflows/docs.yml/badge.svg)](https://github.com/studioripe/retrodevhelper/actions/workflows/docs.yml)
 </div>
 
